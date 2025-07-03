@@ -1,0 +1,35 @@
+<h2>הרשמה</h2>
+<div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+<div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="outline">
+    <mat-label>שם מלא</mat-label>
+    <input matInput type="text" formControlName="name" required>
+    <mat-error *ngIf="registerForm.controls['name'].hasError('required')">שם מלא נדרש</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>כתובת דוא"ל</mat-label>
+    <input matInput type="email" formControlName="email" required>
+    <mat-error *ngIf="registerForm.controls['email'].hasError('required')">כתובת דוא"ל נדרשת</mat-error>
+    <mat-error *ngIf="registerForm.controls['email'].hasError('email')">כתובת דוא"ל לא תקינה</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>סיסמה</mat-label>
+    <input matInput type="password" formControlName="password" required>
+    <mat-error *ngIf="registerForm.controls['password'].hasError('required')">סיסמה נדרשת</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>תפקיד</mat-label>
+    <mat-select formControlName="role">
+      <mat-option value="student">תלמיד</mat-option>
+      <mat-option value="teacher">מורה</mat-option>
+    </mat-select>
+    <mat-error *ngIf="registerForm.controls['role'].hasError('required')">תפקיד נדרש</mat-error>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">הירשם</button>
+  <p>כבר יש לך חשבון? <a routerLink="/auth/login">התחבר כאן</a></p>
+</form>

@@ -1,0 +1,13 @@
+<mat-toolbar color="primary">
+    <span>אפליקציית קורסים מקוונת</span>
+    <span class="spacer"></span>
+    <a mat-button routerLink="/courses" routerLinkActive="active">קורסים</a>
+    <a mat-button routerLink="/auth/login" routerLinkActive="active">התחברות</a>
+    <a mat-button routerLink="/auth/register" routerLinkActive="active">הרשמה</a>
+<a *ngIf="getRole() === 'teacher'" mat-button routerLink="/courses/teacher-management" routerLinkActive="active">ניהול קורסים</a>
+    <!-- <ng-container *ngIf="authService.getRole() === 'teacher'">
+    </ng-container> -->
+  </mat-toolbar>
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>

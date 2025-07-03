@@ -1,0 +1,66 @@
+/* General Styles */
+.management-actions {
+  padding: 20px;
+}
+
+.course-list-container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive grid */
+  gap: 20px; /* Space between cards */
+  margin-top: 10px;
+}
+
+.course-management-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Pushes actions to the bottom */
+}
+
+.course-management-card mat-card-header {
+  background-color: #f5f5f5; /* Light background for header */
+}
+
+.course-management-card mat-card-content {
+  flex-grow: 1; /* Allows content to take available space */
+  padding-bottom: 16px; /* Add some padding at the bottom of content */
+}
+
+.course-management-card mat-card-actions {
+  display: flex;
+  justify-content: flex-end; /* Align buttons to the right */
+  padding: 8px 16px !important; /* Override default padding if necessary */
+  border-top: 1px solid rgba(0,0,0,.12); /* Separator line for actions */
+}
+
+.lesson-management {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+
+.lesson-management h3 {
+  margin-top: 0;
+}
+
+/* Ensure button for adding new course is prominent */
+.management-actions > button[mat-raised-button] {
+  margin-bottom: 20px;
+}
+
+/* Responsive adjustments if needed */
+@media (max-width: 600px) {
+  .courses-grid {
+    grid-template-columns: 1fr; /* Single column on small screens */
+  }
+}
+
+mat-divider {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

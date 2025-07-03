@@ -1,0 +1,9 @@
+.full-width {
+  width: 100%;
+  margin-bottom: 10px; /* Optional: adds some space between fields */
+}
+
+mat-dialog-content form {
+ display: flex;
+ flex-direction: column;
+}

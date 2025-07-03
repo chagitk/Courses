@@ -1,0 +1,84 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>ניהול קורסים</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="management-actions">
+      <button mat-raised-button color="primary" (click)="addCourse()">
+        הוסף קורס חדש
+      </button>
+
+      <div class="course-list-container">
+        <h3>קורסים קיימים</h3>
+        <div *ngIf="courses.length === 0 && !isLoading">לא נמצאו קורסים.</div>
+        <div class="courses-grid" *ngIf="courses.length > 0">
+          <mat-card *ngFor="let course of courses" class="course-management-card">
+            <mat-card-header>
+              <mat-card-title>{{ course.title }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <p>{{ course.description | slice:0:100 }}{{ course.description.length > 100 ? '...' : '' }}</p>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-icon-button color="primary" (click)="updateCourse(course.id)" matTooltip="ערוך קורס">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteCourse(course.id)" matTooltip="מחק קורס">
+                <mat-icon>delete</mat-icon>
+              </button>
+              <button mat-icon-button (click)="manageLessons(course.id)" matTooltip="נהל שיעורים">
+                <mat-icon>{{ expandedCourseId === course.id ? 'expand_less' : 'expand_more' }}</mat-icon>
+              </button>
+            </mat-card-actions>
+
+            <div *ngIf="expandedCourseId === course.id" class="lessons-section">
+              <h4>שיעורים</h4>
+              <button mat-stroked-button color="primary" (click)="addLesson(course.id)" class="add-lesson-button">
+                <mat-icon>add</mat-icon> הוסף שיעור חדש
+              </button>
+
+              <div *ngIf="lessonsByCourse.get(course.id) && lessonsByCourse.get(course.id)!.length === 0" class="no-lessons">
+                אין עדיין שיעורים לקורס זה.
+              </div>
+
+              <mat-list *ngIf="lessonsByCourse.get(course.id) && lessonsByCourse.get(course.id)!.length > 0">
+                <mat-list-item *ngFor="let lesson of lessonsByCourse.get(course.id)">
+                  <mat-icon matListItemIcon>school</mat-icon>
+                  <div matListItemTitle>{{lesson.title}}</div>
+                  <div matListItemLine>{{lesson.content | slice:0:100 }}{{ lesson.content && lesson.content.length > 100 ? '...' : '' }}</div>
+                  
+                  <button matListItemMeta mat-icon-button color="primary" (click)="openEditLessonDialog(course.id, lesson)" matTooltip="ערוך שיעור">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button matListItemMeta mat-icon-button color="warn" (click)="deleteLesson(course.id, lesson.id)" matTooltip="מחק שיעור">
+                    <mat-icon>delete_outline</mat-icon>
+                  </button>
+                </mat-list-item>
+              </mat-list>
+              <mat-progress-bar mode="indeterminate" *ngIf="isLoading && expandedCourseId === course.id"></mat-progress-bar>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+
+      <mat-divider *ngIf="courses.length > 0"></mat-divider>
+
+      <div class="lesson-management" *ngIf="courses.length > 0">
+        <h3>ניהול שיעורים</h3>
+        <mat-form-field appearance="outline">
+          <mat-label>בחר קורס</mat-label>
+          <mat-select [(value)]="selectedCourseId">
+            <mat-option *ngFor="let course of courses" [value]="course.id">
+              {{ course.title }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="lesson-actions">
+          <button mat-button [disabled]="!selectedCourseId" (click)="addLesson(selectedCourseId!)">הוסף שיעור</button>
+        </div>
+        <!-- TODO: Add lesson list here -->
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
